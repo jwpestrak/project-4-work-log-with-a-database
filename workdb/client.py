@@ -1,4 +1,4 @@
-#premature optimization is the root of all evil
+from backend import Database
 
 class Client(object):
     """Class that contains methods for:
