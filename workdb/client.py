@@ -1,4 +1,5 @@
-from backend import Database
+import sys
+#from backend import Database
 
 class Client(object):
     """Class that contains methods for:
@@ -14,7 +15,31 @@ class Client(object):
 
     def run(self):
         """Run the client application until the user exits."""
-        input("""Would you like to
-        [A]dd an entry
-        [L]ookup an entry
-        [Q]uit this application? """)
+        choice = ""
+        while choice != "Q":
+            choice = input("""Would you like to
+            [A]dd an entry
+            [L]ookup an entry
+            [Q]uit this application? """)
+
+            if choice == 'A':
+                self.add()
+            elif choice == 'L':
+                self.lookup()
+            else:
+                self.quit()
+
+    def add(self):
+        """Allow employee to enter their
+        name,
+        task worked on,
+        time worked (i.e., duration), and
+        general notes about the task."""
+        print("The user wants to add a record.")
+
+    def lookup(self):
+        print("foo")
+
+    def quit(self):
+        print("Thank you for using this database. Goodbye!")
+        sys.exit()

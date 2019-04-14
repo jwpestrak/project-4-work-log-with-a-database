@@ -1,5 +1,5 @@
 from workdb.client import Client
 
 if __name__ == "__main__":
-    client = Client() 
+    client = Client()
     client.run()

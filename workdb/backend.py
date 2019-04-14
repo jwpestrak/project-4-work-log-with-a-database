@@ -2,7 +2,6 @@ from peewee import *
 
 db = SqliteDatabase("tasks.db")
 
-
 class Task(Model):
     username = CharField(max_length=255, unique=False)
     taskname = CharField(max_length=255, unique=False)
