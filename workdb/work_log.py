@@ -58,6 +58,32 @@ def add_entry():
             print("Work log saved successfully!")
 
 def view_entries():
+    """View previous entries."""
+    print("How would you live to find a previous entry?")
+    choice = None
+    while choice != 'q':
+        print("Enter 'q' to go back to main menu.")
+        for key, value in menu_previous_entry.items():
+            print("{}) {}".format(key, value.__doc__))
+        choice = input('Action: ').lower().strip()
+
+        if choice in menu:
+            menu[choice]()
+
+def find_employee():
+    """Find previous entry by employee name."""
+    pass
+
+def find_date():
+    """Find previous entry by create date."""
+    pass
+
+def find_duration():
+    """Find previous entry by task duration."""
+    pass
+
+def find_search():
+    """Find previous entry by notes using search term."""
     pass
 
 menu = OrderedDict([
@@ -65,7 +91,13 @@ menu = OrderedDict([
     ('v', view_entries),
 ])
 
+menu_previous_entry = OrderedDict([
+    ('e', find_employee),
+    ('t', find_date),
+    ('d', find_duration),
+    ('s', find_search),
+])
+
 if __name__ == '__main__':
     initialize()
     menu_loop()
-
