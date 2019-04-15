@@ -59,7 +59,7 @@ def add_entry():
 
 def view_entries():
     """View previous entries."""
-    print("How would you live to find a previous entry?")
+    print("How would you like to find a previous entry?")
     choice = None
     while choice != 'q':
         print("Enter 'q' to go back to main menu.")
@@ -67,12 +67,30 @@ def view_entries():
             print("{}) {}".format(key, value.__doc__))
         choice = input('Action: ').lower().strip()
 
-        if choice in menu:
-            menu[choice]()
+        if choice in menu_previous_entry:
+            menu_previous_entry[choice]()
 
 def find_employee():
     """Find previous entry by employee name."""
-    pass
+    print("If you want to view entries by a specific employee, enter their name. "
+          "To see a list of all employees, simply press Enter.")
+    employee = input("Enter employee name: ")
+    if len(employee.strip()) > 0:
+        #return entries that were created by specified employee
+        entries = Task.select().where(Task.username == employee)
+        for entry in entries:
+            print(entry.username,
+                  entry.taskname,
+                  entry.duration,
+                  entry.notes)
+
+    else:
+        # present list of employees with entries
+        employees = Task.select(username).distinct()
+        print(employees)
+        print(type(employees))
+        # choose an employee to see entries
+
 
 def find_date():
     """Find previous entry by create date."""
