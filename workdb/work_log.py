@@ -86,7 +86,7 @@ def find_employee():
 
     else:
         # present list of employees with entries
-        employees = Task.select(username).distinct()
+        employees = Task.select(Task.username).distinct()
         print(employees)
         print(type(employees))
         # choose an employee to see entries
@@ -98,7 +98,15 @@ def find_date():
 
 def find_duration():
     """Find previous entry by task duration."""
-    pass
+    duration = input("Enter task duration: ")
+    #assert isinstance(duration, int)
+    entries = Task.select().where(Task.duration == duration)
+    #print(type(entries))
+    for entry in entries:
+        print(entry.username,
+              entry.taskname,
+              entry.duration,
+              entry.notes)
 
 def find_search():
     """Find previous entry by notes using search term."""
