@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from collections import OrderedDict
+import datetime
 import sys
 
 from peewee import *
@@ -12,6 +13,8 @@ class Task(Model):
     taskname = CharField()
     duration = IntegerField(default=0)
     notes = TextField()
+    date = DateField(default=datetime.date.today)
+
 
     class Meta:
         database = db
@@ -81,7 +84,8 @@ def find_employee():
             print(entry.username,
                   entry.taskname,
                   entry.duration,
-                  entry.notes)
+                  entry.notes,
+                  entry.date)
 
     else:
         # present list of employees with entries
@@ -89,8 +93,6 @@ def find_employee():
         menu_employees = OrderedDict([])
         for i, employee in enumerate(employees):
             menu_employees[i] = employee
-        print(menu_employees)
-        print(type(menu_employees))
         # choose an employee to see entries
         print("For which employee would you like to view entries?")
         for key, value in menu_employees.items():
@@ -101,12 +103,30 @@ def find_employee():
             print(entry.username,
                   entry.taskname,
                   entry.duration,
-                  entry.notes)
+                  entry.notes,
+                  entry.date)
 
 
 def find_date():
     """Find previous entry by create date."""
-    pass
+    # present list of dates with entries
+    dates = sorted(list(set([t.date for t in Task.select()])))
+    print(type(dates[0]))
+    menu_dates = OrderedDict([])
+    for i, date in enumerate(dates):
+        menu_dates[i] = date
+    # choose a date to see entries
+    print("For which date would you like to view entries?")
+    for key, value in menu_dates.items():
+        print("{}) {}".format(key, str(value)))
+    choice = input('Number: ').lower().strip()
+    entries = Task.select().where(Task.date == menu_dates[int(choice)])
+    for entry in entries:
+        print(entry.username,
+              entry.taskname,
+              entry.duration,
+              entry.notes,
+              entry.date)
 
 def find_duration():
     """Find previous entry by task duration."""
@@ -118,7 +138,8 @@ def find_duration():
         print(entry.username,
               entry.taskname,
               entry.duration,
-              entry.notes)
+              entry.notes,
+              entry.date)
 
 def find_search():
     """Find previous entry by notes using search term."""
