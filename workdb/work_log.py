@@ -76,7 +76,6 @@ def find_employee():
           "To see a list of all employees, simply press Enter.")
     employee = input("Enter employee name: ")
     if len(employee.strip()) > 0:
-        #return entries that were created by specified employee
         entries = Task.select().where(Task.username == employee)
         for entry in entries:
             print(entry.username,
@@ -86,10 +85,23 @@ def find_employee():
 
     else:
         # present list of employees with entries
-        employees = Task.select(Task.username).distinct()
-        print(employees)
-        print(type(employees))
+        employees = sorted(list(set([t.username for t in Task.select()])))
+        menu_employees = OrderedDict([])
+        for i, employee in enumerate(employees):
+            menu_employees[i] = employee
+        print(menu_employees)
+        print(type(menu_employees))
         # choose an employee to see entries
+        print("For which employee would you like to view entries?")
+        for key, value in menu_employees.items():
+            print("{}) {}".format(key, value))
+        choice = input('Number: ').lower().strip()
+        entries = Task.select().where(Task.username == menu_employees[int(choice)])
+        for entry in entries:
+            print(entry.username,
+                  entry.taskname,
+                  entry.duration,
+                  entry.notes)
 
 
 def find_date():
