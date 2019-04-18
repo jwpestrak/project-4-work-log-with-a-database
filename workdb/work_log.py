@@ -142,8 +142,18 @@ def find_duration():
               entry.date)
 
 def find_search():
-    """Find previous entry by notes using search term."""
-    pass
+    """Find previous entry by notes or task name using a search term."""
+    search_term = input("Enter search term: ")
+    entries = Task.select().where(
+        (Task.taskname.contains(search_term)) |
+        (Task.notes.contains(search_term))
+    )
+    for entry in entries:
+        print(entry.username,
+              entry.taskname,
+              entry.duration,
+              entry.notes,
+              entry.date)
 
 menu = OrderedDict([
     ('a', add_entry),
